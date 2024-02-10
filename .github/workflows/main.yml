@@ -13,12 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Install dependencies
-        run: ls
+        run: |
+          cd app
+          npm install
 
-  # Tests:
-  #   runs-on: ubuntu-latest
+  Tests:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Run tests
-  #       run: cd app && npm test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          cd app
+          npm test
