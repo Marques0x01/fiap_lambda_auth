@@ -58,7 +58,7 @@ jobs:
           npm install
       - name: Zip files
         run: |
-          find /app -type f -exec zip lambda.zip {} +
+          find ./app/ -type f -exec zip lambda.zip {} +
           mv lambda.zip ./infra/lambda.zip
       - name: Terraform init
         run: |
