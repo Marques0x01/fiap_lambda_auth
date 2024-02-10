@@ -2,8 +2,10 @@ resource "aws_lambda_function" "lambda" {
   filename      = "lambda.zip" # Nome do arquivo zip contendo seu código Node.js
   function_name = var.lambda_name
   role          = aws_iam_role.lambda_role.arn
-  handler       = data.archive_file.zip.output_base64sha256
+  handler       = "index.handler"
   runtime       = "nodejs14.x"
+
+  source_code_hash = data.archive_file.zip.output_base64sha256
 
   environment {
     variables = {
@@ -14,14 +16,8 @@ resource "aws_lambda_function" "lambda" {
   depends_on = [aws_iam_role.lambda_role]
 }
 
-
 data "archive_file" "zip" {
-  excludes = [
-    "infra/",
-    ".github/",
-    ".gitignore"
-  ]
-  type = "zip"
-  source_file = path.module
+  type        = "zip"
+  source_dir  = "${path.module}/../app"
   output_path = "${path.module}/lambda.zip"
 }
