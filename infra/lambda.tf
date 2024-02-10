@@ -11,5 +11,5 @@ resource "aws_lambda_function" "lambda" {
     }
   }
 
-  depends_on = [aws_iam_role.lambda_role, aws_s3_bucket.bucket]
+  depends_on = [aws_iam_role.lambda_role]
 }
