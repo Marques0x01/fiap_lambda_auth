@@ -1,0 +1,5 @@
+lambda_name = "lambda_auth"
+policies_name = "lambda_auth_policies"
+role_name = "lambda_auth_role"
+bucket_backend_name = "tfstate-lambda-auth"
+region = "us-east-1"
