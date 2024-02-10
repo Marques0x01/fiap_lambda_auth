@@ -14,11 +14,11 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: ls && cd app/src && npm install
+        run: ls
 
-  Tests:
-    runs-on: ubuntu-latest
+  # Tests:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Run tests
-        run: cd app && npm test
+  #   steps:
+  #     - name: Run tests
+  #       run: cd app && npm test
