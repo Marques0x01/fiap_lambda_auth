@@ -27,7 +27,7 @@ variable "region" {
 
 variable "env_vars" {
   description = "Enviroment variables"
-  type        = object()
+  type        = object({})
   default     = {}
 }
 
