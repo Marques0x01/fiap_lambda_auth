@@ -172,5 +172,6 @@ override.tf.json
 terraform.rc
 *terraform.lock*
 lambda.zip
+template.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform,node

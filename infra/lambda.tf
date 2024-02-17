@@ -8,9 +8,7 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = data.archive_file.zip.output_base64sha256
 
   environment {
-    variables = {
-      foo = "bar"
-    }
+    variables = var.env_vars
   }
 
   depends_on = [aws_iam_role.lambda_role]
