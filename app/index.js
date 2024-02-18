@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
 exports.handler = async (event) => {
-  switch (event.resource) {
+  switch (event.path) {
     case "/fiap-lanches/create-account":
       return await signUp(JSON.parse(event.body)).then(resp => resp).catch(err => err);
     case "/fiap-lanches/login":
@@ -13,44 +13,23 @@ exports.handler = async (event) => {
     default:
       return {
         statusCode: 404,
-        message: "Resource not found"
+        body: JSON.stringify({
+          message: (`Resource not found: ${event.path}`),
+          statusCode: 404
+        })
       }
   }
-
-
-  // await signUp('12345678901', 'fabiomlima07@gmail.com', 'Password123@')
-  //   .then((resp) => {
-  //     console.log('Cadastro concluído com sucesso!');
-  //   })
-  //   .catch(err => {
-  //     console.error('Erro ao cadastrar usuário:', err);
-  //   });
-
-  // await fazerLogin('12345678901', 'Password123@')
-  //   .then(() => {
-  //     console.log('Usuário autenticado com sucesso!');
-  //   })
-  //   .catch(err => {
-  //     console.error('Erro ao autenticar usuário:', err);
-  //   });
-
-
-
-  // await confirmarCadastroPorEmail("12345678901", "665668")
-  //   .then((resp) => {
-  //     console.log('Usuário confirmado com sucesso!');
-  //   })
-  //   .catch(err => {
-  //     console.error('Erro ao confirmar usuário:', err);
-  //   });
 
 };
 
 async function login(body) {
-  if (!body.username || !body.password) {
+  if (!body.cpf || !body.password) {
     return {
       statusCode: 400,
-      message: "username and password can not be empty"
+      body: JSON.stringify({
+        message: "cpf and password can not be empty",
+        statusCode: 400
+      })
     }
   }
 
@@ -58,7 +37,7 @@ async function login(body) {
     AuthFlow: 'USER_PASSWORD_AUTH',
     ClientId: process.env.MY_VARIABLE || "515sa7alcskl84ec9htqetmnd2",
     AuthParameters: {
-      USERNAME: body.username,
+      USERNAME: body.cpf,
       PASSWORD: body.password
     }
   };
@@ -68,15 +47,21 @@ async function login(body) {
     console.log('User authenticate', data);
     return {
       statusCode: 200,
-      message: "User authenticate",
-      data: data
+      body: JSON.stringify({
+        statusCode: 200,
+        message: "User authenticate",
+        data: data
+      })
     }
   } catch (err) {
     console.error('Error on authenticate user', err);
     return {
       statusCode: 500,
-      message: "Error on authenticate user",
-      error: err
+      body: JSON.stringify({
+        statusCode: 500,
+        message: "Error on authenticate user",
+        error: err
+      })
     }
   }
 }
@@ -85,7 +70,10 @@ async function signUp(body) {
   if (!body.cpf || !body.email || !body.password) {
     return {
       statusCode: 400,
-      message: "username, password and email can not be empty"
+      body: JSON.stringify({
+        message: "cpf, password and email can not be empty",
+        statusCode: 400
+      })
     }
   }
 
@@ -104,32 +92,42 @@ async function signUp(body) {
   try {
     const data = await cognito.signUp(params).promise();
     console.log('User registrate with success: ', data);
+
     return {
       statusCode: 200,
-      message: "User registrate with success",
-      data: data
+      body: JSON.stringify({
+        statusCode: 200,
+        message: "User registrate with success",
+        data: data
+      })
     }
   } catch (err) {
     console.error('Error on creating user:', err);
     return {
       statusCode: 500,
-      message: "Error on creating user",
-      error: err
+      body: JSON.stringify({
+        statusCode: 500,
+        message: "Error on creating user",
+        error: err
+      })
     }
   }
 }
 
 async function confirmUser(body) {
-  if (!body.username || !body.code) {
+  if (!body.cpf || !body.code) {
     return {
       statusCode: 400,
-      message: "username and code can not be empty"
+      body: JSON.stringify({
+        message: "username and code can not be empty",
+        statusCode: 400
+      })
     }
   }
 
   const params = {
     ClientId: process.env.MY_VARIABLE || "515sa7alcskl84ec9htqetmnd2",
-    Username: body.username,
+    Username: body.cpf,
     ConfirmationCode: body.code
   };
 
@@ -138,15 +136,22 @@ async function confirmUser(body) {
     console.log('Usuário confirmado com sucesso:', data);
     return {
       statusCode: 200,
-      message: "User confirmated with success",
-      data: data
+      body: JSON.stringify({
+        statusCode: 200,
+        message: "User confirmated with success",
+        data: data
+      })
     }
   } catch (err) {
     console.error('Error on confirmating user', err);
+
     return {
       statusCode: 500,
-      message: "Error on confirmating user",
-      error: err
+      body: JSON.stringify({
+        statusCode: 500,
+        message: "Error on confirmating user",
+        error: err
+      })
     }
   }
 }
