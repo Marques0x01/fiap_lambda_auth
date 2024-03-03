@@ -6,5 +6,5 @@ region              = "us-east-1"
 
 
 env_vars = {
-    cognito_client_id = "515sa7alcskl84ec9htqetmnd2"
+    cognito_client_id = "531d1cu0a6a8nus7n0nr8noqkv"
 }
