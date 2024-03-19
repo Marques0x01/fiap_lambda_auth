@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "fiap-tfstates"
+    bucket         = "tfstate-fiap"
     key            = "lambda-auth/terraform.tfstate"
     region         = "us-east-1"
     
