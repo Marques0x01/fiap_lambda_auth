@@ -35,7 +35,7 @@ async function login(body) {
 
   const params = {
     AuthFlow: 'USER_PASSWORD_AUTH',
-    ClientId: process.env.cognito_client_id || "1covo9snudlq458a55svp239hu",
+    ClientId: process.env.MY_VARIABLE || "531d1cu0a6a8nus7n0nr8noqkv",
     AuthParameters: {
       USERNAME: body.cpf,
       PASSWORD: body.password
@@ -78,7 +78,7 @@ async function signUp(body) {
   }
 
   const params = {
-    ClientId: process.env.cognito_client_id || "1covo9snudlq458a55svp239hu",
+    ClientId: process.env.MY_VARIABLE || "531d1cu0a6a8nus7n0nr8noqkv",
     Username: body.cpf,
     Password: body.password,
     UserAttributes: [
@@ -126,7 +126,7 @@ async function confirmUser(body) {
   }
 
   const params = {
-    ClientId: process.env.cognito_client_id || "1covo9snudlq458a55svp239hu",
+    ClientId: process.env.MY_VARIABLE || "531d1cu0a6a8nus7n0nr8noqkv",
     Username: body.cpf,
     ConfirmationCode: body.code
   };
