@@ -2,7 +2,7 @@ lambda_name         = "lambda_auth"
 policies_name       = "lambda_auth_policies"
 role_name           = "lambda_auth_role"
 bucket_backend_name = "tfstates-fiap"
-region              = "us-east-1"
+region              = "us-east-2"
 
 
 env_vars = {
